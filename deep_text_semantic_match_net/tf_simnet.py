@@ -102,9 +102,9 @@ def freeze(conf_dict):
         net = utility.import_object(
                 conf_dict["net_py"], conf_dict["net_class"])(conf_dict)
         test_l = dict([(u, tf.placeholder(tf.int32, [None, v], name=u))
-            for (u, v) in dict(conf_dict["left_slots"]).iteritems()])
+            for (u, v) in dict(conf_dict["left_slots"]).items()])
         test_r = dict([(u, tf.placeholder(tf.int32, [None, v], name=u))
-            for (u, v) in dict(conf_dict["right_slots"]).iteritems()])
+            for (u, v) in dict(conf_dict["right_slots"]).items()])
         pred = net.predict(test_l, test_r)
         if training_mode == "pointwise":
             output_prob = tf.nn.softmax(pred, -1, name="output_prob")
@@ -136,8 +136,8 @@ if __name__ == "__main__":
     # args = parser.parse_args()
     # task_conf = args.task_conf
 
-    task = 'predict'
-    task_conf = './examples/lstm-pointwise.json'
+    task = 'train'
+    task_conf = './examples/knrm-pointwise.json'
 
     config = load_config(task_conf)
     # task = args.task

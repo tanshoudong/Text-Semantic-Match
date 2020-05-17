@@ -67,6 +67,7 @@ class MVLSTM(object):
                 right_emb, sequence_length = seq_length(right), dtype=tf.float32) 
         right_seq_encoder = tf.concat(bi_right_outputs, -1)
 
+        #进行交互运算
         cross = tf.matmul(left_seq_encoder, tf.transpose(right_seq_encoder, [0, 2, 1])) # (N, len, len)
         #if self.match_mask:
         #    cross_mask = get_cross_mask(left, right)
@@ -74,6 +75,7 @@ class MVLSTM(object):
         #    #paddings = tf.ones_like(cross)*(-2**32+1)
         #    #cross = tf.where(tf.equal(cross_mask, 0), paddings, cross)
         cross_reshape = tf.reshape(cross, [-1, self.seq_len1 * self.seq_len2])
+        #返回values，indices
         k_max_match = tf.nn.top_k(cross_reshape, k=self.k_max_num, sorted=True)[0]
         #k_max_match = tf.Print(k_max_match, [k_max_match], "k_max_match")
         pred = self.fc2_layer.ops(k_max_match)

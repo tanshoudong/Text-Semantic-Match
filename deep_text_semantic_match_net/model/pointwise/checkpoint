@@ -1,2 +1,2 @@
-model_checkpoint_path: "lstm.final"
-all_model_checkpoint_paths: "lstm.final"
+model_checkpoint_path: "pyramid.final"
+all_model_checkpoint_paths: "pyramid.final"
